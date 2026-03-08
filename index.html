@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publiez votre annonce · Cœurs Solitaires Morbihan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f3ee;
+  --card: #ffffff;
+  --ink: #1a1714;
+  --muted: #8a7f74;
+  --border: #e0d8cf;
+  --gold: #b8924a;
+  --gold-light: #d4aa6a;
+  --gold-bg: rgba(184,146,74,0.08);
+  --gold-border: rgba(184,146,74,0.25);
+  --rose: #c4697a;
+  --rose-bg: rgba(196,105,122,0.08);
+  --rose-border: rgba(196,105,122,0.25);
+  --shadow: 0 2px 24px rgba(26,23,20,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  font-family: 'Jost', sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 15% 20%, rgba(184,146,74,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(196,105,122,0.05) 0%, transparent 50%);
+}
+.header { text-align: center; padding: 40px 20px 0; }
+.header-heart { margin-bottom: 10px; line-height: 1; }
+.header-logo { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink); font-weight: 700; margin-bottom: 2px; font-family: 'Playfair Display', serif; }
+.header-brand { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 6px; }
+.header-sub { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.container { max-width: 680px; margin: 0 auto; padding: 0 20px 80px; }
+.screen { display: none; }
+.screen.active { display: block; animation: fadeUp 0.4s ease forwards; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.intro-card { background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 48px 40px; box-shadow: var(--shadow); text-align: center; position: relative; overflow: hidden; }
+.intro-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, var(--gold), var(--rose), var(--gold)); }
+.intro-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 20px; }
+.intro-title { font-family: 'Playfair Display', serif; font-size: 32px; line-height: 1.2; margin-bottom: 16px; }
+.intro-title em { color: var(--rose); font-style: italic; }
+.intro-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+.prix-badge { display: flex; align-items: center; gap: 16px; background: var(--gold-bg); border: 1px solid var(--gold-border); border-radius: 2px; padding: 16px 20px; margin-bottom: 24px; text-align: left; }
+.prix-amount { font-size: 32px; font-weight: 700; color: var(--gold); font-family: 'Playfair Display', serif; }
+.prix-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.prix-detail strong { color: var(--ink); display: block; font-size: 13px; }
+.checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 28px; text-align: left; }
+.check-item { display: flex; align-items: center; gap: 8px; font-size: 13px; background: var(--bg); border: 1px solid var(--border); border-radius: 2px; padding: 10px 12px; }
+.prog-wrap { margin-bottom: 24px; }
+.prog-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.prog-step { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.prog-count { font-size: 11px; color: var(--muted); }
+.prog-bar { height: 2px; background: var(--border); border-radius: 1px; margin-bottom: 8px; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--rose)); border-radius: 1px; }
+.prog-steps { display: flex; gap: 6px; }
+.prog-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+.prog-dot.active { background: var(--gold); }
+.prog-dot.done { background: var(--rose); }
+.section-card { background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 40px; box-shadow: var(--shadow); }
+.section-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 12px; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 28px; line-height: 1.2; margin-bottom: 10px; }
+.section-title em { color: var(--rose); font-style: italic; }
+.section-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+.field-group { margin-bottom: 20px; }
+.field-label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.field-required { color: var(--rose); }
+.field-hint { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.5; }
+.f-input, .f-textarea, .f-select { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 2px; font-family: 'Jost', sans-serif; font-size: 14px; background: white; color: var(--ink); transition: border-color 0.2s; }
+.f-input:focus, .f-textarea:focus, .f-select:focus { outline: none; border-color: var(--gold); }
+.f-textarea { resize: vertical; }
+.f-char-count { font-size: 11px; color: var(--muted); text-align: right; margin-top: 4px; }
+.f-char-count.warn { color: var(--rose); }
+.f-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.radio-group { display: flex; flex-direction: column; gap: 8px; }
+.radio-card { display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 2px; padding: 12px 16px; cursor: pointer; background: white; transition: all 0.15s; }
+.radio-card:hover { border-color: var(--gold); background: var(--gold-bg); }
+.radio-card.selected { border-color: var(--gold); background: var(--gold-bg); }
+.radio-card input[type=radio] { accent-color: var(--gold); flex-shrink: 0; cursor: pointer; }
+.radio-card-label { font-size: 14px; cursor: pointer; }
+.tags-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { font-size: 12px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; background: white; }
+.tag:hover { border-color: var(--gold); }
+.tag.selected { background: var(--gold-bg); border-color: var(--gold); font-weight: 600; }
+.motcle-input-wrap { display: flex; gap: 8px; }
+.btn-add-tag { padding: 12px 16px; background: var(--gold-bg); border: 1px solid var(--gold-border); border-radius: 2px; color: var(--gold); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'Jost', sans-serif; }
+.btn-add-tag:hover { background: var(--gold); color: white; }
+.lettre-deco { display: block; font-style: italic; font-size: 12px; color: var(--rose); border-left: 2px solid var(--rose-border); padding-left: 12px; margin-bottom: 10px; line-height: 1.6; }
+.photo-zone { border: 2px dashed var(--border); border-radius: 2px; padding: 32px; text-align: center; cursor: pointer; }
+.photo-zone:hover { border-color: var(--gold); background: var(--gold-bg); }
+.photo-icon { font-size: 28px; margin-bottom: 8px; }
+.photo-text { font-size: 13px; margin-bottom: 4px; }
+.photo-sub { font-size: 11px; color: var(--muted); }
+.photo-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.photo-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border); }
+.recap-section { margin-bottom: 20px; }
+.recap-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
+.recap-row { display: flex; border-bottom: 1px solid var(--border); padding: 10px 0; gap: 16px; }
+.recap-key { font-size: 12px; color: var(--muted); width: 140px; flex-shrink: 0; }
+.recap-val { font-size: 13px; color: var(--ink); line-height: 1.5; }
+.rgpd-box { background: var(--rose-bg); border: 1px solid var(--rose-border); border-radius: 2px; padding: 16px 18px; font-size: 12px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
+.rgpd-box strong { color: var(--ink); }
+.check-label { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; cursor: pointer; margin-bottom: 12px; }
+.check-label input { margin-top: 2px; accent-color: var(--gold); flex-shrink: 0; }
+.cond-block { border: 1px solid var(--border); border-radius: 2px; margin-bottom: 16px; overflow: hidden; }
+.cond-header { display: flex; align-items: center; gap: 10px; padding: 16px 18px; cursor: pointer; background: var(--gold-bg); user-select: none; }
+.cond-header:hover { background: rgba(184,146,74,0.13); }
+.cond-icon { font-size: 16px; }
+.cond-title { flex: 1; font-size: 13px; font-weight: 600; color: var(--ink); }
+.cond-arrow { font-size: 12px; color: var(--gold); transition: transform 0.2s; }
+.cond-arrow.open { transform: rotate(90deg); }
+.cond-body { display: none; padding: 16px 18px; border-top: 1px solid var(--border); background: white; font-size: 12.5px; color: #555; line-height: 1.8; }
+.cond-body p { margin-bottom: 10px; }
+.cond-body ul { padding-left: 18px; margin-bottom: 10px; }
+.cond-body ul li { margin-bottom: 4px; }
+.cond-body.open { display: block; }
+.cond-check { display: flex; align-items: flex-start; gap: 10px; padding: 14px 18px; background: var(--rose-bg); border-top: 1px solid var(--rose-border); font-size: 12.5px; color: var(--ink); cursor: pointer; line-height: 1.5; }
+.cond-check input { margin-top: 2px; accent-color: var(--gold); flex-shrink: 0; }
+.paiement-card { background: var(--gold-bg); border: 1px solid var(--gold-border); border-radius: 2px; padding: 32px; text-align: center; }
+.paiement-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.paiement-amount { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.paiement-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+.paiement-methods { display: flex; flex-direction: column; gap: 10px; }
+.paiement-btn { display: block; width: 100%; padding: 14px 20px; border-radius: 2px; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; border: none; text-align: center; }
+.paiement-btn.primary { background: var(--gold); color: white; }
+.paiement-btn.primary:hover { background: var(--gold-light); }
+.paiement-btn.secondary { background: white; color: var(--ink); border: 1px solid var(--border); }
+.paiement-btn.secondary:hover { border-color: var(--gold); }
+.paiement-note { font-size: 12px; color: var(--muted); margin-top: 20px; line-height: 1.6; }
+.success-wrap { text-align: center; padding: 8px 0; }
+.success-icon { font-size: 48px; margin-bottom: 20px; }
+.success-title { font-family: 'Playfair Display', serif; font-size: 28px; line-height: 1.2; margin-bottom: 16px; }
+.success-title em { color: var(--rose); font-style: italic; }
+.success-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+.success-steps { display: flex; flex-direction: column; gap: 16px; text-align: left; margin-bottom: 24px; }
+.success-step { display: flex; align-items: flex-start; gap: 14px; }
+.success-num { width: 28px; height: 28px; border-radius: 50%; background: var(--gold-bg); border: 1px solid var(--gold-border); color: var(--gold); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.success-step-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.success-step-text strong { color: var(--ink); display: block; margin-bottom: 2px; }
+.btn-primary { background: var(--ink); color: white; border: none; padding: 16px 28px; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+.btn-primary:hover { background: #2d2925; transform: translateY(-1px); }
+.btn-back { background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 16px 20px; font-family: 'Jost', sans-serif; font-size: 14px; border-radius: 2px; cursor: pointer; }
+.btn-back:hover { border-color: var(--gold); color: var(--gold); }
+.btn-row { display: flex; gap: 12px; margin-top: 28px; }
+.btn-row .btn-primary { flex: 1; }
+.error-msg { display: none; background: rgba(196,105,122,0.1); border: 1px solid var(--rose-border); border-radius: 2px; padding: 12px 16px; font-size: 13px; color: var(--rose); margin-top: 12px; }
+.footer { text-align: center; padding: 24px 0; font-size: 11px; color: var(--muted); line-height: 2; }
+.footer a { color: var(--gold); text-decoration: none; }
+.sep { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+.onglets-nav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+.onglet-btn { font-family:'Jost',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.5px; padding:8px 14px; border:1px solid var(--border); border-radius:20px; background:white; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+.onglet-btn:hover { border-color:var(--gold); color:var(--gold); }
+.onglet-btn.active { background:var(--gold); border-color:var(--gold); color:white; }
+.onglet-panel { display:none; }
+.onglet-panel.active { display:block; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-heart">
+    <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg" width="48" height="44">
+      <path d="M50 85 C50 85 5 52 5 28 C5 14 16 5 28 5 C37 5 45 10 50 18 C55 10 63 5 72 5 C84 5 95 14 95 28 C95 52 50 85 50 85Z" fill="none" stroke="#b8924a" stroke-width="4"/>
+    </svg>
+  </div>
+  <div class="header-logo">Lili Karantez</div>
+  <div class="header-brand">Les Cœurs Solitaires</div>
+  <div class="header-sub">Morbihan · Magazine des Rencontres</div>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="screen active" id="s-intro">
+    <div class="intro-card">
+      <div class="intro-eyebrow">Édition Avril 2026 · Parution le 25 mars 2026</div>
+      <h1 class="intro-title">Publiez votre annonce<br>dans le <em>magazine</em></h1>
+      <p class="intro-desc">Rejoignez le magazine des rencontres du Morbihan — la nouvelle façon de se présenter aux célibataires de votre département. <strong>Mettez-vous en valeur avec une vraie annonce, soignée, qui vous ressemble.</strong></p>
+      <div class="prix-badge">
+        <div class="prix-amount">47€</div>
+        <div class="prix-detail">
+          <strong>Publication de votre annonce</strong>
+          Visible 1 mois · Mise en relation par Lili Karantez (avec supplément) · 1200 membres Morbihan
+        </div>
+      </div>
+      <div class="checklist">
+        <div class="check-item"><span>✍️</span>Votre texte, vos mots, votre style</div>
+        <div class="check-item"><span>📸</span>Jusqu'à 3 photos (optionnel)</div>
+        <div class="check-item"><span>💌</span>Mise en relation par Lili (avec supplément)</div>
+        <div class="check-item"><span>🔒</span>Vos coordonnées protégées</div>
+        <div class="check-item"><span>👀</span>Visible 1 mois dans le magazine</div>
+        <div class="check-item"><span>✨</span>Relecture et mise en forme incluse</div>
+      </div>
+      <button class="btn-primary" id="btn-creer" style="width:100%;">Créer mon annonce →</button>
+      <p style="margin-top:12px;font-size:12px;color:var(--muted);">Aucun engagement · Paiement uniquement à la fin · RGPD respecté</p>
+    </div>
+    <div class="footer">
+      Lili Karantez · Les Cœurs Solitaires · SIRET 40149331700069<br>
+      Centre des Affaires Lorient La Base — 1 rue Étienne d'Orves — 56100 Lorient<br>
+      <a href="mailto:lilikarantez@gmail.com">lilikarantez@gmail.com</a>
+    </div>
+  </div>
+
+  <!-- CONDITIONS -->
+  <div class="screen" id="s-conditions">
+    <div class="section-card">
+      <div class="section-eyebrow">Avant de commencer</div>
+      <h2 class="section-title">Nos <em>engagements</em><br>&amp; conditions</h2>
+      <p class="section-desc">Merci de lire et d'accepter chacun des documents ci-dessous pour accéder au formulaire de publication.</p>
+
+      <!-- RGPD -->
+      <div class="cond-block">
+        <div class="cond-header" data-target="rgpd">
+          <span class="cond-icon">🔒</span>
+          <span class="cond-title">Protection des données personnelles (RGPD)</span>
+          <span class="cond-arrow" id="arrow-rgpd">▸</span>
+        </div>
+        <div class="cond-body" id="body-rgpd">
+          <p>Lili Karantez collecte : prénom, nom, âge, ville, email, téléphone (optionnel), description personnelle et photos (optionnelles).</p>
+          <p><strong>Données publiées :</strong> Seuls votre pseudo, âge, ville et texte d'annonce apparaissent dans le magazine. Votre nom, email, téléphone et le paragraphe libre de confidences restent strictement confidentiels et ne sont jamais communiqués à des tiers.</p>
+          <p><strong>Fichier de mise en page :</strong> Un fichier Excel est établi pour la mise en page du magazine. Il est détruit dans les 2 mois suivant la parution.</p>
+          <p><strong>Durée de conservation :</strong> 2 mois après parution, puis suppression de toutes vos données.</p>
+          <p><strong>Vos droits :</strong> suppression à tout moment — contact : <strong><a href="mailto:lilikarantez@gmail.com">lilikarantez@gmail.com</a></strong></p>
+          <p><strong>Aucune transmission à des tiers.</strong></p>
+        </div>
+        <label class="cond-check">
+          <input type="checkbox" id="cb-cond-rgpd">
+          J'ai lu et j'accepte la politique de protection des données personnelles.
+        </label>
+      </div>
+
+      <!-- CHARTE -->
+      <div class="cond-block">
+        <div class="cond-header" data-target="charte">
+          <span class="cond-icon">🤝</span>
+          <span class="cond-title">Charte d'engagement</span>
+          <span class="cond-arrow" id="arrow-charte">▸</span>
+        </div>
+        <div class="cond-body" id="body-charte">
+          <p>En publiant votre annonce, vous vous engagez à :</p>
+          <ul>
+            <li>Fournir des informations sincères et exactes vous concernant.</li>
+            <li>Utiliser des photos récentes et vous représentant réellement.</li>
+            <li>Rédiger une annonce respectueuse, bienveillante, sans propos discriminatoires.</li>
+            <li>Ne pas usurper l'identité d'une autre personne.</li>
+            <li>Respecter la vie privée des autres membres.</li>
+          </ul>
+          <p>Lili Karantez se réserve le droit de refuser ou modifier toute annonce ne respectant pas cette charte, sans obligation de remboursement si le contenu est délibérément trompeur ou irrespectueux.</p>
+          <p><strong>Maquette :</strong> Vous recevrez une maquette de votre annonce avant publication et pourrez apporter des modifications une seule fois. Une deuxième maquette ne sera pas proposée.</p>
+        </div>
+        <label class="cond-check">
+          <input type="checkbox" id="cb-cond-charte">
+          J'ai lu et j'accepte la charte d'engagement.
+        </label>
+      </div>
+
+      <!-- CHARTE PHOTOS -->
+      <div class="cond-block">
+        <div class="cond-header" data-target="photos">
+          <span class="cond-icon">📸</span>
+          <span class="cond-title">Charte photos</span>
+          <span class="cond-arrow" id="arrow-photos">▸</span>
+        </div>
+        <div class="cond-body" id="body-photos">
+          <p><strong>Photos acceptées :</strong></p>
+          <ul>
+            <li>Portrait soigné, de face ou de trois-quarts, fond neutre ou naturel.</li>
+            <li>Photo en situation valorisante : activité, voyage, sourire naturel.</li>
+            <li>Bonne qualité, lumière correcte, image nette et récente.</li>
+          </ul>
+          <p><strong>Photos refusées :</strong></p>
+          <ul>
+            <li>Photos avec enfants, membres de la famille ou groupe de personnes.</li>
+            <li>Photos avec cigarette, verre d'alcool ou dans un contexte festif.</li>
+            <li>Tenue négligée : jogging, pyjama, torse nu, décolleté suggestif.</li>
+            <li>Posture peu valorisante : avachi(e) sur un canapé, au lit, dans une voiture.</li>
+            <li>Selfie dans des toilettes ou un miroir de salle de bain.</li>
+            <li>Photo floue, sombre, mal cadrée ou datant de plus de 2 ans.</li>
+            <li>Photo d'une autre personne que vous.</li>
+          </ul>
+          <p style="font-style:italic;color:var(--muted);margin-top:10px;">💡 Votre photo est la première impression que vous donnez. Choisissez-en une où vous vous sentez bien — c'est celle-là qui donnera envie d'en savoir plus.</p>
+          <hr style="margin:14px 0;border:none;border-top:1px solid var(--border);">
+          <p><strong>Consentement à la diffusion :</strong> En déposant vos photos, vous autorisez Lili Karantez à les utiliser uniquement dans le cadre de votre annonce dans le magazine Les Cœurs Solitaires Morbihan.</p>
+          <p>Dans le magazine, vos photos seront :</p>
+          <ul>
+            <li><strong>Floutées par défaut</strong> — révélées uniquement aux personnes intéressées, après mise en relation par Lili.</li>
+            <li><strong>Visibles directement</strong> — si vous choisissez cette option lors du dépôt.</li>
+          </ul>
+          <p>Si vous ne souhaitez pas déposer de photo, un pictogramme personnalisé sera utilisé à la place dans le magazine.</p>
+          <p>Vos photos ne sont jamais transmises à des tiers et sont supprimées dans les 2 mois suivant la parution.</p>
+        </div>
+        <label class="cond-check">
+          <input type="checkbox" id="cb-cond-photos">
+          J'ai lu et j'accepte la charte photos, et je consens à la diffusion de mes photos dans le cadre de mon annonce.
+        </label>
+      </div>
+
+      <!-- CGV -->
+      <div class="cond-block">
+        <div class="cond-header" data-target="cgv">
+          <span class="cond-icon">📋</span>
+          <span class="cond-title">Conditions Générales de Vente</span>
+          <span class="cond-arrow" id="arrow-cgv">▸</span>
+        </div>
+        <div class="cond-body" id="body-cgv">
+          <p><strong>Prestataire :</strong> Lili Karantez — Les Cœurs Solitaires, Centre des Affaires Lorient La Base, 1 rue Étienne d'Orves, 56100 Lorient. SIRET 40149331700069.</p>
+          <p><strong>Prix :</strong> 47 € net (non assujetti à la TVA) par annonce, visibilité 1 mois. La mise en relation fait l'objet d'un supplément tarifaire convenu séparément.</p>
+          <p><strong>Paiement :</strong> après validation de l'annonce par Lili, selon le mode choisi : Yurplan, PayPal, Wero, virement bancaire, chèque ou autre (à convenir ensemble). Aucun paiement n'est demandé avant validation.</p>
+          <p><strong>Rétractation :</strong> impossible après publication (art. L221-28 Code de la consommation). Avant publication, vous pouvez annuler sans frais en contactant Lili par email.</p>
+          <p><strong>Réclamations :</strong> <a href="mailto:lilikarantez@gmail.com">lilikarantez@gmail.com</a> — réponse sous 48h ouvrées.</p>
+        </div>
+        <label class="cond-check">
+          <input type="checkbox" id="cb-cond-cgv">
+          J'ai lu et j'accepte les Conditions Générales de Vente.
+        </label>
+      </div>
+
+      <div id="err-conditions" class="error-msg">Merci d'accepter les quatre documents pour continuer.</div>
+
+      <div class="btn-row">
+        <button class="btn-back" id="btn-retour-intro">← Retour</button>
+        <button class="btn-primary" id="btn-valider-cond" style="opacity:0.5;cursor:not-allowed;">Continuer →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 1 -->
+  <div class="screen" id="s-etape1">
+    <div class="prog-wrap">
+      <div class="prog-top"><span class="prog-step">Étape 1 — Votre identité</span><span class="prog-count">1 / 3</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:33%"></div></div>
+      <div class="prog-steps"><div class="prog-dot active"></div><div class="prog-dot"></div><div class="prog-dot"></div></div>
+    </div>
+    <div class="section-card">
+      <div class="section-eyebrow">Informations personnelles</div>
+      <h2 class="section-title">Parlez-nous<br>de <em>vous</em></h2>
+      <p class="section-desc">Ces informations restent confidentielles. Seuls les éléments que vous autorisez seront visibles dans le magazine.</p>
+
+      <div class="f-grid-2">
+        <div class="field-group">
+          <label class="field-label">Prénom <span class="field-required">*</span></label>
+          <input class="f-input" id="f-prenom" type="text" placeholder="Votre prénom">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Nom <span class="field-required">*</span></label>
+          <input class="f-input" id="f-nom" type="text" placeholder="Votre nom">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Pseudo dans le magazine <span class="field-required">*</span></label>
+        <span class="field-hint">Le nom sous lequel votre annonce sera publiée — prénom seul, surnom, ou prénom + initiale.</span>
+        <input class="f-input" id="f-pseudo" type="text" placeholder="Ex : Sophie, Marc L., Mael56…">
+      </div>
+
+      <div class="f-grid-2">
+        <div class="field-group">
+          <label class="field-label">Email <span class="field-required">*</span></label>
+          <input class="f-input" id="f-email" type="email" placeholder="votre@email.fr">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Téléphone</label>
+          <input class="f-input" id="f-tel" type="tel" placeholder="06 xx xx xx xx">
+        </div>
+      </div>
+
+      <div class="f-grid-2">
+        <div class="field-group">
+          <label class="field-label">Âge</label>
+          <input class="f-input" id="f-age" type="number" min="18" max="99" placeholder="Ex : 42">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Ville / Code postal <span class="field-required">*</span></label>
+          <input class="f-input" id="f-ville" type="text" placeholder="Ex : Vannes (56000)">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Je suis <span class="field-required">*</span></label>
+        <div class="radio-group" id="rg-genre">
+          <label class="radio-card"><input type="radio" name="genre" value="homme"><div class="radio-card-label">Un homme</div></label>
+          <label class="radio-card"><input type="radio" name="genre" value="femme"><div class="radio-card-label">Une femme</div></label>
+          <label class="radio-card"><input type="radio" name="genre" value="autre"><div class="radio-card-label">Autre / je préfère ne pas préciser</div></label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Je cherche <span class="field-required">*</span></label>
+        <div class="radio-group" id="rg-recherche">
+          <label class="radio-card"><input type="radio" name="recherche" value="femme"><div class="radio-card-label">Une femme</div></label>
+          <label class="radio-card"><input type="radio" name="recherche" value="homme"><div class="radio-card-label">Un homme</div></label>
+          <label class="radio-card"><input type="radio" name="recherche" value="ouvert"><div class="radio-card-label">Ouvert(e) à tout</div></label>
+        </div>
+      </div>
+
+      <div class="f-grid-2" style="margin-top:4px;">
+        <div class="field-group">
+          <label class="field-label">Tranche d'âge recherchée</label>
+          <input class="f-input" id="f-age-recherche" type="text" placeholder="Ex : 40-55 ans">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Distance acceptable</label>
+          <select class="f-select" id="f-distance">
+            <option value="">— Sélectionner —</option>
+            <option>Même ville / agglomération</option>
+            <option>Même département</option>
+            <option>Toute la Bretagne</option>
+            <option>Toute la France</option>
+            <option>Peu importe</option>
+          </select>
+        </div>
+      </div>
+
+      <hr class="sep">
+
+      <div class="field-group">
+        <label class="field-label">Ma description physique</label>
+        <span class="field-hint">Taille, silhouette, couleur des yeux et cheveux — ce que vous voulez partager.</span>
+        <textarea class="f-textarea" id="f-physique" rows="3" placeholder="Ex : 1m72, yeux verts, cheveux châtains..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Ma situation personnelle</label>
+        <div class="f-grid-2">
+          <div>
+            <span class="field-hint">Situation amoureuse</span>
+            <select class="f-select" id="f-situation">
+              <option value="">— Sélectionner —</option>
+              <option>Célibataire</option>
+              <option>Divorcé(e)</option>
+              <option>Séparé(e)</option>
+              <option>Veuf / Veuve</option>
+              <option>Je préfère ne pas préciser</option>
+            </select>
+          </div>
+          <div>
+            <span class="field-hint">Enfants ?</span>
+            <select class="f-select" id="f-enfants">
+              <option value="">— Sélectionner —</option>
+              <option>Pas d'enfants</option>
+              <option>Enfant(s) à charge</option>
+              <option>Enfant(s) majeur(s)</option>
+              <option>Je préfère ne pas préciser</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Informations complémentaires</label>
+        <div class="f-grid-2">
+          <div>
+            <span class="field-hint">Je suis fumeur / non-fumeur</span>
+            <select class="f-select" id="f-fumeur">
+              <option value="">— Sélectionner —</option>
+              <option>Non-fumeur</option>
+              <option>Fumeur occasionnel</option>
+              <option>Fumeur</option>
+              <option>Je préfère ne pas préciser</option>
+            </select>
+          </div>
+          <div>
+            <span class="field-hint">Ma mobilité géographique</span>
+            <select class="f-select" id="f-mobilite">
+              <option value="">— Sélectionner —</option>
+              <option>Prêt(e) à déménager</option>
+              <option>Selon la personne</option>
+              <option>Non, je reste dans ma région</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-hint">Profession</span>
+        <input class="f-input" id="f-profession" type="text" placeholder="Domaine d'activité">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Message privé pour Lili <span style="font-weight:400;color:var(--muted);font-size:12px;">(optionnel)</span></label>
+        <span class="field-hint">Confidentiel — non publié dans le magazine. Précisions, questions, contexte particulier…</span>
+        <textarea class="f-textarea" id="f-msg-lili" rows="3" placeholder="Tout ce que vous souhaitez partager avec Lili en privé…"></textarea>
+      </div>
+
+      <div id="err-etape1" class="error-msg">Merci de remplir tous les champs obligatoires (prénom, nom, pseudo, email, âge, ville, genre et recherche).</div>
+
+      <div class="btn-row">
+        <button class="btn-back" id="btn-retour-cond">← Retour</button>
+        <button class="btn-primary" id="btn-etape1-suivant">Continuer → Mon annonce</button>
+      </div>
+    </div>
+    <div class="footer">Étape 1 sur 3 · Vos données sont confidentielles</div>
+  </div>
+
+  <!-- ÉTAPE 2 -->
+  <div class="screen" id="s-etape2">
+    <div class="prog-wrap">
+      <div class="prog-top"><span class="prog-step">Étape 2 — Votre annonce</span><span class="prog-count">2 / 3</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:66%"></div></div>
+      <div class="prog-steps"><div class="prog-dot done"></div><div class="prog-dot active"></div><div class="prog-dot"></div></div>
+    </div>
+    <div class="section-card">
+      <div class="section-eyebrow">Votre annonce</div>
+      <h2 class="section-title">Votre <em>présence</em><br>à l'autre</h2>
+      <p class="section-desc">Pas un CV. Pas un résumé. Cinq fenêtres ouvertes sur qui vous êtes vraiment — remplissez celles qui vous parlent.</p>
+
+      <!-- TITRE -->
+      <div class="field-group">
+        <label class="field-label">Titre de votre annonce <span class="field-required">*</span></label>
+        <span class="field-hint">La première chose qu'on lira. Une phrase qui donne envie d'en savoir plus.</span>
+        <input class="f-input" id="f-titre" type="text" placeholder="Ex : Bretonne attachante cherche quelqu'un à qui raconter la mer…">
+      </div>
+
+      <hr class="sep">
+
+      <!-- 5 ONGLETS -->
+      <p class="field-hint" style="margin-bottom:12px;">👇 <strong>Cliquez sur chaque onglet</strong> pour compléter votre présentation. Les 5 onglets sont obligatoires.</p>
+      <div class="onglets-nav">
+        <button class="onglet-btn active" data-onglet="1">Qui je suis</button>
+        <button class="onglet-btn" data-onglet="2">Mon quotidien</button>
+        <button class="onglet-btn" data-onglet="3">Ce que je cherche</button>
+        <button class="onglet-btn" data-onglet="4">Ce que j'apporte</button>
+        <button class="onglet-btn" data-onglet="5">Mon petit truc</button>
+      </div>
+
+      <div class="onglet-panel active" id="onglet-1">
+        <span class="lettre-deco">« Pas votre bio LinkedIn. Ce que vos proches diraient de vous à quelqu'un qui ne vous connaît pas encore. »</span>
+        <textarea class="f-textarea" id="f-onglet1" rows="6" maxlength="500" placeholder="Je suis quelqu'un qui…" oninput="countChars(this,'cc-o1',500)"></textarea>
+        <div class="f-char-count" id="cc-o1">0 / 500</div>
+
+        <div style="margin-top:20px;">
+          <label class="field-label" style="margin-bottom:6px;">Mes 3 mots-clés sur moi</label>
+          <span class="field-hint">Tapez un mot et cliquez sur <strong>+ Ajouter</strong> (ou appuyez Entrée). Cliquez sur un tag pour le supprimer.</span>
+          <div class="motcle-input-wrap">
+            <input class="f-input" id="f-motcle" type="text" placeholder="Ex : curieux, bienveillant, aventurier" maxlength="30">
+            <button class="btn-add-tag" id="btn-add-motcle">+ Ajouter</button>
+          </div>
+          <div class="tags-wrap" id="tags-motcles" style="margin-top:10px;"></div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <label class="field-label" style="margin-bottom:6px;">Mes 3 mots-clés sur l'Amour</label>
+          <span class="field-hint">Tapez un mot et cliquez sur <strong>+ Ajouter</strong>. Cliquez sur un tag pour le supprimer.</span>
+          <div class="motcle-input-wrap">
+            <input class="f-input" id="f-motcle-amour" type="text" placeholder="Ex : complicité, liberté, tendresse" maxlength="30">
+            <button class="btn-add-tag" id="btn-add-motcle-amour">+ Ajouter</button>
+          </div>
+          <div class="tags-wrap" id="tags-motcles-amour" style="margin-top:10px;"></div>
+        </div>
+      </div>
+      <div class="onglet-panel" id="onglet-2">
+        <span class="lettre-deco">« Une journée avec vous — ce qui vous anime, vous recharge, ce que vous ne rateriez pour rien au monde. »</span>
+        <textarea class="f-textarea" id="f-onglet2" rows="6" maxlength="500" placeholder="Le matin je…  Le week-end j'aime…" oninput="countChars(this,'cc-o2',500)"></textarea>
+        <div class="f-char-count" id="cc-o2">0 / 500</div>
+      </div>
+      <div class="onglet-panel" id="onglet-3">
+        <span class="lettre-deco">« Pas un cahier des charges. Ce que vous espérez ressentir, vivre, construire ensemble. »</span>
+        <textarea class="f-textarea" id="f-onglet3" rows="6" maxlength="500" placeholder="Je cherche quelqu'un avec qui…" oninput="countChars(this,'cc-o3',500)"></textarea>
+        <div class="f-char-count" id="cc-o3">0 / 500</div>
+      </div>
+      <div class="onglet-panel" id="onglet-4">
+        <span class="lettre-deco">« Votre façon d'aimer, de prendre soin, d'être présent(e). Ce que vous donnez dans une relation. »</span>
+        <textarea class="f-textarea" id="f-onglet4" rows="6" maxlength="500" placeholder="Dans une relation, je suis quelqu'un qui…" oninput="countChars(this,'cc-o4',500)"></textarea>
+        <div class="f-char-count" id="cc-o4">0 / 500</div>
+      </div>
+      <div class="onglet-panel" id="onglet-5">
+        <span class="lettre-deco">« Quelque chose d'inattendu, d'attachant, de singulier — ce petit truc qui vous rend unique. »</span>
+        <textarea class="f-textarea" id="f-onglet5" rows="6" maxlength="500" placeholder="Ce que peu de gens savent de moi…" oninput="countChars(this,'cc-o5',500)"></textarea>
+        <div class="f-char-count" id="cc-o5">0 / 500</div>
+      </div>
+
+      <hr class="sep">
+
+      <!-- PASSIONS -->
+      <div class="field-group">
+        <label class="field-label">Mes passions &amp; loisirs</label>
+        <span class="field-hint">Cliquez sur les tags pour les sélectionner.</span>
+        <div class="tags-wrap" id="tags-passions">
+          <span class="tag">🌊 Mer &amp; voile</span>
+          <span class="tag">🚴 Vélo</span>
+          <span class="tag">🥾 Randonnée</span>
+          <span class="tag">🍽️ Gastronomie</span>
+          <span class="tag">🎭 Théâtre &amp; spectacles</span>
+          <span class="tag">📚 Lecture</span>
+          <span class="tag">🎵 Musique</span>
+          <span class="tag">✈️ Voyage</span>
+          <span class="tag">🎨 Arts créatifs</span>
+          <span class="tag">🌿 Nature &amp; jardinage</span>
+          <span class="tag">🐾 Animaux</span>
+          <span class="tag">🏃 Running &amp; sport</span>
+          <span class="tag">🎬 Cinéma</span>
+          <span class="tag">👨‍🍳 Cuisine</span>
+          <span class="tag">🌺 Yoga &amp; méditation</span>
+          <span class="tag">🏄 Surf &amp; sports nautiques</span>
+          <span class="tag">⛵ Plaisance</span>
+          <span class="tag">🎸 Concerts</span>
+          <span class="tag">📷 Photo</span>
+          <span class="tag">🍷 Vins &amp; dégustation</span>
+          <span class="tag">🧘 Bien-être</span>
+          <span class="tag">🌍 Écologie</span>
+          <span class="tag">🏕️ Camping &amp; plein air</span>
+          <span class="tag">♟️ Jeux de société</span>
+          <span class="tag">🎭 Humour &amp; impro</span>
+          <span class="tag">🏊 Natation</span>
+          <span class="tag">🧗 Escalade</span>
+          <span class="tag">🎻 Musique classique</span>
+          <span class="tag">✍️ Écriture</span>
+          <span class="tag">🌙 Astronomie</span>
+        </div>
+        <div class="field-group" style="margin-top:14px;">
+          <span class="field-hint">Autre passion non listée ? Ajoutez-la ici.</span>
+          <div class="motcle-input-wrap">
+            <input class="f-input" id="f-passion-libre" type="text" placeholder="Ex : Apiculture, Surf, Bricolage…" maxlength="40">
+            <button class="btn-add-tag" id="btn-add-passion">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <hr class="sep">
+
+      <!-- PHOTOS -->
+      <div class="field-group">
+        <label class="field-label">Photos <span style="font-weight:400;color:var(--muted);font-size:12px;">(optionnel)</span></label>
+        <span class="field-hint">Jusqu'à 3 photos. Si vous n'en déposez pas, un pictogramme personnalisé sera utilisé à la place dans le magazine.</span>
+
+        <div style="background:#fdf8f4;border:1px solid var(--border);border-radius:4px;padding:14px;margin:10px 0;font-size:12px;color:var(--muted);line-height:1.7;">
+          ✅ <strong style="color:var(--ink);">Rappel charte :</strong> portrait soigné, récent, seul(e), bonne lumière.<br>
+          ❌ Refusé : groupe, enfants, cigarette, alcool, jogging, torse nu, selfie en voiture ou WC.
+        </div>
+
+        <div class="photo-zone" id="photo-zone">
+          <input type="file" id="f-photos" accept="image/jpeg,image/png,image/webp" multiple style="display:none;">
+          <div class="photo-icon">📸</div>
+          <div class="photo-text">Cliquez pour choisir vos photos</div>
+          <div class="photo-sub">JPG, PNG · Max 3 photos · 5 Mo chacune</div>
+        </div>
+        <div class="photo-preview" id="photo-preview"></div>
+
+        <div style="margin-top:14px;">
+          <label class="field-label" style="font-size:13px;margin-bottom:8px;">Dans le magazine, je souhaite que mes photos soient :</label>
+          <div class="radio-group" id="rg-photos-diffusion">
+            <label class="radio-card"><input type="radio" name="photos_diffusion" value="visibles" checked><div class="radio-card-label">🟡 Visibles directement dans le magazine</div></label>
+            <label class="radio-card"><input type="radio" name="photos_diffusion" value="non"><div class="radio-card-label">🚫 Je ne souhaite pas mettre de photo — un pictogramme sera utilisé à la place</div></label>
+          </div>
+        </div>
+      </div>
+
+      <div id="err-etape2" class="error-msg">Merci de remplir au minimum le titre et l'onglet "Qui je suis".</div>
+
+      <div class="btn-row">
+        <button class="btn-back" id="btn-etape2-retour">← Retour</button>
+        <button class="btn-primary" id="btn-etape2-suivant">Continuer → Relecture</button>
+      </div>
+    </div>
+    <div class="footer">Étape 2 sur 3 · Votre annonce sera relue et mise en forme par Lili.</div>
+  </div>
+
+  <!-- ÉTAPE 3 -->
+  <div class="screen" id="s-etape3">
+    <div class="prog-wrap">
+      <div class="prog-top"><span class="prog-step">Étape 3 — Validation</span><span class="prog-count">3 / 3</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+      <div class="prog-steps"><div class="prog-dot done"></div><div class="prog-dot done"></div><div class="prog-dot active"></div></div>
+    </div>
+    <div class="section-card">
+      <div class="section-eyebrow">Récapitulatif</div>
+      <h2 class="section-title">Votre annonce<br>est <em>prête</em></h2>
+      <p class="section-desc">Vérifiez vos informations avant de valider. Lili la relira et vous contactera avant publication.</p>
+
+      <div class="recap-section">
+        <div class="recap-label">Votre profil</div>
+        <div class="recap-row"><div class="recap-key">Prénom &amp; nom</div><div class="recap-val" id="rc-nom">—</div></div>
+        <div class="recap-row"><div class="recap-key">Pseudo</div><div class="recap-val" id="rc-pseudo">—</div></div>
+        <div class="recap-row"><div class="recap-key">Email</div><div class="recap-val" id="rc-email">—</div></div>
+        <div class="recap-row"><div class="recap-key">Âge &amp; ville</div><div class="recap-val" id="rc-ageville">—</div></div>
+        <div class="recap-row"><div class="recap-key">Je suis / Je cherche</div><div class="recap-val" id="rc-genre">—</div></div>
+      </div>
+
+      <div class="recap-section">
+        <div class="recap-label">Votre annonce</div>
+        <div class="recap-row"><div class="recap-key">Titre</div><div class="recap-val" id="rc-titre">—</div></div>
+        <div class="recap-row"><div class="recap-key">Lettre</div><div class="recap-val" id="rc-lettre" style="max-height:80px;overflow:hidden;">—</div></div>
+        <div class="recap-row"><div class="recap-key">Passions</div><div class="recap-val" id="rc-passions">—</div></div>
+        <div class="recap-row"><div class="recap-key">Mots-clés</div><div class="recap-val" id="rc-motcles">—</div></div>
+      </div>
+
+      <hr class="sep">
+
+      <div class="rgpd-box">
+        <strong>Protection de vos données (RGPD)</strong><br>
+        Vos informations personnelles restent strictement confidentielles. Seuls votre pseudo, âge, ville et annonce seront visibles dans le magazine. Contact : <strong><a href="mailto:lilikarantez@gmail.com">lilikarantez@gmail.com</a></strong>
+      </div>
+
+      <label class="check-label">
+        <input type="checkbox" id="cb-rgpd">
+        J'accepte que mes données soient collectées par <strong>Lili Karantez — Les Cœurs Solitaires</strong> conformément à la politique RGPD.
+      </label>
+      <label class="check-label" style="margin-bottom:20px;">
+        <input type="checkbox" id="cb-cgu">
+        Je comprends que mon annonce sera relue et validée par Lili avant publication, et que le paiement de 47€ est dû à la validation.
+      </label>
+
+      <div id="err-etape3" class="error-msg">Merci d'accepter les conditions pour continuer.</div>
+
+      <hr class="sep">
+
+      <!-- PAIEMENT INTÉGRÉ -->
+      <div id="bloc-paiement-etape3">
+        <label class="field-label" style="margin-bottom:6px;">Mon mode de paiement préféré</label>
+        <span class="field-hint">Lili vous enverra les détails par email après validation de votre annonce.</span>
+        <div class="radio-group" id="rg-paiement-e3" style="margin-top:10px;">
+          <label class="radio-card"><input type="radio" name="paiement_choix" value="yurplan"><div class="radio-card-label">🎟️ Yurplan <span style="font-size:11px;color:var(--muted);">— paiement en ligne direct</span></div></label>
+          <label class="radio-card"><input type="radio" name="paiement_choix" value="paypal"><div class="radio-card-label">🅿️ PayPal <span style="font-size:11px;color:var(--muted);">— paiement en ligne direct</span></div></label>
+          <label class="radio-card"><input type="radio" name="paiement_choix" value="wero"><div class="radio-card-label">💜 Wero <span style="font-size:11px;color:var(--muted);">— Lili vous communique son numéro</span></div></label>
+          <label class="radio-card"><input type="radio" name="paiement_choix" value="virement"><div class="radio-card-label">🏦 Virement <span style="font-size:11px;color:var(--muted);">— Lili vous communique son RIB</span></div></label>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:24px;">
+        <button class="btn-back" id="btn-etape3-retour">← Retour</button>
+        <button class="btn-primary" id="btn-etape3-valider">Envoyer mon annonce →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAIEMENT -->
+  <div class="screen" id="s-paiement">
+    <div class="section-card">
+      <div class="section-eyebrow">Dernière étape</div>
+      <h2 class="section-title">Règlement de<br>votre <em>annonce</em></h2>
+      <p class="section-desc">Votre annonce a été transmise à Lili. Pour finaliser la publication, réglez les 47€ de mise en ligne.</p>
+      <div class="paiement-card">
+        <div class="paiement-title">Publication de votre annonce</div>
+        <div class="paiement-amount">47€</div>
+        <div class="paiement-sub">Visible 1 mois dans le magazine Morbihan<br>Mise en relation par Lili Karantez (avec supplément)</div>
+        <div class="paiement-methods">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;">Choisissez votre mode de paiement préféré. Lili vous enverra les détails par email sous 48h après validation de votre annonce.</p>
+          <div class="radio-group" id="rg-paiement">
+            <label class="radio-card"><input type="radio" name="paiement" value="yurplan"><div class="radio-card-label">🎟️ Yurplan (paiement en ligne)</div></label>
+            <label class="radio-card"><input type="radio" name="paiement" value="paypal"><div class="radio-card-label">🅿️ PayPal</div></label>
+            <label class="radio-card"><input type="radio" name="paiement" value="wero"><div class="radio-card-label">💜 Wero</div></label>
+            <label class="radio-card"><input type="radio" name="paiement" value="virement"><div class="radio-card-label">🏦 Virement bancaire</div></label>
+            <label class="radio-card"><input type="radio" name="paiement" value="cheque"><div class="radio-card-label">📝 Chèque</div></label>
+            <label class="radio-card"><input type="radio" name="paiement" value="autre"><div class="radio-card-label">Autre — à préciser avec Lili</div></label>
+          </div>
+          <div id="paiement-confirm" style="display:none;margin-top:16px;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:2px;padding:16px;">
+            <p style="font-size:13px;color:var(--ink);line-height:1.7;">✅ <strong>Votre choix a bien été enregistré.</strong><br><span style="color:var(--muted);font-size:12px;">Lili vous contactera à l'adresse <strong id="confirm-email">—</strong> avec les détails de paiement sous 48h.</span></p>
+          </div>
+          <button class="btn-primary" id="btn-confirmer-paiement" style="width:100%;margin-top:16px;">Confirmer mon choix →</button>
+        </div>
+        <p class="paiement-note">Une fois le paiement reçu, Lili vous envoie un email de confirmation sous 24h.</p>
+      </div>
+      <div class="btn-row" style="margin-top:20px;">
+        <button class="btn-back" id="btn-paiement-retour">← Retour</button>
+      </div>
+    </div>
+    <div class="footer">Questions ? <a href="mailto:lilikarantez@gmail.com">lilikarantez@gmail.com</a></div>
+  </div>
+
+  <!-- SUCCÈS -->
+  <div class="screen" id="s-succes">
+    <div class="section-card">
+      <div class="success-wrap">
+        <div class="success-icon">💌</div>
+        <h2 class="success-title">Votre annonce<br>est <em>envoyée !</em></h2>
+        <p class="success-desc">Lili a bien reçu votre annonce. Elle vous contactera sous 48h pour confirmer la publication dans le magazine Morbihan.</p>
+        <div class="success-steps">
+          <div class="success-step"><div class="success-num">1</div><div class="success-step-text"><strong>Relecture par Lili</strong>Elle vérifie et met en forme votre annonce avec soin.</div></div>
+          <div class="success-step"><div class="success-num">2</div><div class="success-step-text"><strong>Paiement 47 €</strong>Si vous avez choisi Yurplan ou PayPal, la fenêtre de paiement vient de s'ouvrir. Pour Wero ou virement, Lili vous contacte avec ses coordonnées.</div></div>
+          <div class="success-step"><div class="success-num">3</div><div class="success-step-text"><strong>Publication dans le magazine</strong>Votre annonce apparaît dans le magazine Morbihan — visible 1 mois.</div></div>
+          <div class="success-step"><div class="success-num">4</div><div class="success-step-text"><strong>Mise en relation</strong>Lili vous transmet les messages des personnes intéressées.</div></div>
+        </div>
+        <p style="font-size:13px;color:var(--muted);">Des questions ? <a href="mailto:lilikarantez@gmail.com">lilikarantez@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="footer">Lili Karantez · Les Cœurs Solitaires · SIRET 40149331700069</div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+// ── DONNÉES ──
+var D = {
+  prenom:'', nom:'', pseudo:'', email:'', tel:'', age:'', ville:'',
+  genre:'', recherche:'', physique:'', enfants:'', profession:'',
+  titre:'', lettre:'', cherche:'', passions:[], motcles:[]
+};
+
+// ── NAVIGATION ──
+function goTo(id) {
+  var all = document.querySelectorAll('.screen');
+  for (var i = 0; i < all.length; i++) {
+    all[i].style.display = 'none';
+    all[i].classList.remove('active');
+  }
+  var el = document.getElementById(id);
+  el.style.display = 'block';
+  setTimeout(function() { el.classList.add('active'); }, 10);
+  window.scrollTo(0, 0);
+}
+
+// ── PAGE INTRO ──
+document.getElementById('btn-creer').onclick = function() { goTo('s-conditions'); };
+
+// ── PAGE CONDITIONS ──
+document.getElementById('btn-retour-intro').onclick = function() { goTo('s-intro'); };
+
+// Accordéon conditions
+document.querySelectorAll('.cond-header').forEach(function(hdr) {
+  hdr.onclick = function() {
+    var id = hdr.getAttribute('data-target');
+    document.getElementById('body-' + id).classList.toggle('open');
+    document.getElementById('arrow-' + id).classList.toggle('open');
+  };
+});
+
+// Activation bouton conditions
+function checkCond() {
+  var ok = document.getElementById('cb-cond-rgpd').checked
+        && document.getElementById('cb-cond-charte').checked
+        && document.getElementById('cb-cond-photos').checked
+        && document.getElementById('cb-cond-cgv').checked;
+  var btn = document.getElementById('btn-valider-cond');
+  btn.style.opacity = ok ? '1' : '0.5';
+  btn.style.cursor = ok ? 'pointer' : 'not-allowed';
+}
+document.getElementById('cb-cond-rgpd').onchange = checkCond;
+document.getElementById('cb-cond-charte').onchange = checkCond;
+document.getElementById('cb-cond-photos').onchange = checkCond;
+document.getElementById('cb-cond-cgv').onchange = checkCond;
+
+document.getElementById('btn-valider-cond').onclick = function() {
+  if (!document.getElementById('cb-cond-rgpd').checked
+   || !document.getElementById('cb-cond-charte').checked
+   || !document.getElementById('cb-cond-photos').checked
+   || !document.getElementById('cb-cond-cgv').checked) {
+    document.getElementById('err-conditions').style.display = 'block';
+    return;
+  }
+  goTo('s-etape1');
+};
+
+// ── ÉTAPE 1 ──
+document.getElementById('btn-retour-cond').onclick = function() { goTo('s-conditions'); };
+
+// Style radio au clic
+document.querySelectorAll('.radio-card').forEach(function(card) {
+  card.onclick = function() {
+    var input = card.querySelector('input[type=radio]');
+    if (!input) return;
+    var group = card.closest('.radio-group');
+    group.querySelectorAll('.radio-card').forEach(function(c) { c.classList.remove('selected'); });
+    card.classList.add('selected');
+    input.checked = true;
+  };
+});
+
+document.getElementById('btn-etape1-suivant').onclick = function() {
+  var prenom = document.getElementById('f-prenom').value.trim();
+  var nom    = document.getElementById('f-nom').value.trim();
+  var pseudo = document.getElementById('f-pseudo').value.trim();
+  var email  = document.getElementById('f-email').value.trim();
+  var age    = document.getElementById('f-age').value.trim();
+  var ville  = document.getElementById('f-ville').value.trim();
+  var genre  = document.querySelector('input[name="genre"]:checked');
+  var rech   = document.querySelector('input[name="recherche"]:checked');
+  var err    = document.getElementById('err-etape1');
+
+  if (!prenom || !nom || !pseudo || !email || !email.includes('@') || !ville || !genre || !rech) {
+    err.style.display = 'block';
+    err.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+  err.style.display = 'none';
+
+  D.prenom = prenom; D.nom = nom; D.pseudo = pseudo;
+  D.email = email; D.tel = document.getElementById('f-tel').value.trim();
+  D.age = age; D.ville = ville;
+  D.genre = genre.value; D.recherche = rech.value;
+  D.ageRecherche = document.getElementById('f-age-recherche').value.trim();
+  D.distance = document.getElementById('f-distance').value;
+  D.physique = document.getElementById('f-physique').value.trim();
+  D.situation = document.getElementById('f-situation').value;
+  D.enfants = document.getElementById('f-enfants').value;
+  D.fumeur = document.getElementById('f-fumeur').value;
+  D.mobilite = document.getElementById('f-mobilite').value;
+  D.profession = document.getElementById('f-profession').value.trim();
+  D.msgLili = document.getElementById('f-msg-lili').value.trim();
+
+  goTo('s-etape2');
+};
+
+// ── ÉTAPE 2 ──
+document.getElementById('btn-etape2-retour').onclick = function() { goTo('s-etape1'); };
+
+// Onglets
+document.querySelectorAll('.onglet-btn').forEach(function(btn) {
+  btn.onclick = function() {
+    var num = btn.getAttribute('data-onglet');
+    document.querySelectorAll('.onglet-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.onglet-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('onglet-' + num).classList.add('active');
+  };
+});
+
+// Compteur caractères
+function countChars(el, id, max) {
+  var cc = document.getElementById(id);
+  cc.textContent = el.value.length + ' / ' + max;
+  cc.className = 'f-char-count' + (el.value.length > max * 0.9 ? ' warn' : '');
+}
+
+// Photos
+document.getElementById('photo-zone').onclick = function() { document.getElementById('f-photos').click(); };
+document.getElementById('f-photos').onchange = function() {
+  var preview = document.getElementById('photo-preview');
+  preview.innerHTML = '';
+  Array.from(this.files).slice(0, 3).forEach(function(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = document.createElement('img');
+      img.className = 'photo-thumb';
+      img.src = e.target.result;
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+// Passions
+document.querySelectorAll('#tags-passions .tag').forEach(function(tag) {
+  tag.onclick = function() { tag.classList.toggle('selected'); };
+});
+document.getElementById('btn-add-passion').onclick = function() {
+  var input = document.getElementById('f-passion-libre');
+  var val = input.value.trim();
+  if (!val) return;
+  var tag = document.createElement('span');
+  tag.className = 'tag selected';
+  tag.textContent = '✨ ' + val;
+  tag.title = 'Cliquer pour supprimer';
+  tag.onclick = function() { tag.remove(); };
+  document.getElementById('tags-passions').appendChild(tag);
+  input.value = '';
+};
+document.getElementById('f-passion-libre').onkeydown = function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('btn-add-passion').click(); }
+};
+
+// Mots-clés sur moi
+function addTag(inputId, containerId, max) {
+  var input = document.getElementById(inputId);
+  var val = input.value.trim();
+  if (!val) return;
+  if (document.querySelectorAll('#' + containerId + ' .tag').length >= max) {
+    alert(max + ' mots-clés maximum.'); return;
+  }
+  var tag = document.createElement('span');
+  tag.className = 'tag selected';
+  tag.textContent = val;
+  tag.title = 'Cliquer pour supprimer';
+  tag.onclick = function() { tag.remove(); };
+  document.getElementById(containerId).appendChild(tag);
+  input.value = '';
+}
+document.getElementById('btn-add-motcle').onclick = function() { addTag('f-motcle', 'tags-motcles', 3); };
+document.getElementById('f-motcle').onkeydown = function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); addTag('f-motcle', 'tags-motcles', 3); }
+};
+document.getElementById('btn-add-motcle-amour').onclick = function() { addTag('f-motcle-amour', 'tags-motcles-amour', 3); };
+document.getElementById('f-motcle-amour').onkeydown = function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); addTag('f-motcle-amour', 'tags-motcles-amour', 3); }
+};
+
+document.getElementById('btn-etape2-suivant').onclick = function() {
+  var titre   = document.getElementById('f-titre').value.trim();
+  var onglet1 = document.getElementById('f-onglet1').value.trim();
+  var onglet2 = document.getElementById('f-onglet2').value.trim();
+  var onglet3 = document.getElementById('f-onglet3').value.trim();
+  var onglet4 = document.getElementById('f-onglet4').value.trim();
+  var onglet5 = document.getElementById('f-onglet5').value.trim();
+  var err     = document.getElementById('err-etape2');
+
+  if (!titre || !onglet1 || !onglet2 || !onglet3 || !onglet4 || !onglet5) {
+    err.style.display = 'block';
+    err.textContent = !titre ? 'Merci de remplir le titre de votre annonce.'
+      : !onglet1 ? 'Merci de compléter l\'onglet "Qui je suis".'
+      : !onglet2 ? 'Merci de compléter l\'onglet "Mon quotidien".'
+      : !onglet3 ? 'Merci de compléter l\'onglet "Ce que je cherche".'
+      : !onglet4 ? 'Merci de compléter l\'onglet "Ce que j\'apporte".'
+      : 'Merci de compléter l\'onglet "Mon petit truc".';
+    return;
+  }
+  err.style.display = 'none';
+
+  D.titre   = titre;
+  D.onglet1 = onglet1;
+  D.onglet2 = document.getElementById('f-onglet2').value.trim();
+  D.onglet3 = document.getElementById('f-onglet3').value.trim();
+  D.onglet4 = document.getElementById('f-onglet4').value.trim();
+  D.onglet5 = document.getElementById('f-onglet5').value.trim();
+  D.passions      = Array.from(document.querySelectorAll('#tags-passions .tag.selected')).map(function(t) { return t.textContent.trim(); });
+  D.motcles       = Array.from(document.querySelectorAll('#tags-motcles .tag')).map(function(t) { return t.textContent.trim(); });
+  D.motclesAmour  = Array.from(document.querySelectorAll('#tags-motcles-amour .tag')).map(function(t) { return t.textContent.trim(); });
+
+  document.getElementById('rc-nom').textContent      = D.prenom + ' ' + D.nom;
+  document.getElementById('rc-pseudo').textContent   = D.pseudo;
+  document.getElementById('rc-email').textContent    = D.email;
+  document.getElementById('rc-ageville').textContent = D.age + ' ans · ' + D.ville;
+  document.getElementById('rc-genre').textContent    = 'Je suis ' + D.genre + ' · Je cherche ' + D.recherche;
+  document.getElementById('rc-titre').textContent    = D.titre;
+  document.getElementById('rc-lettre').textContent   = D.onglet1.substring(0, 200) + (D.onglet1.length > 200 ? '…' : '');
+  document.getElementById('rc-passions').textContent = D.passions.length ? D.passions.join(' · ') : '—';
+  document.getElementById('rc-motcles').textContent  = (D.motcles.length ? D.motcles.join(' · ') : '—') + (D.motclesAmour.length ? '  ·  Amour : ' + D.motclesAmour.join(' · ') : '');
+
+  goTo('s-etape3');
+};
+
+// ── ÉTAPE 3 ──
+document.getElementById('btn-etape3-retour').onclick = function() { goTo('s-etape2'); };
+
+document.getElementById('btn-etape3-valider').onclick = function() {
+  if (!document.getElementById('cb-rgpd').checked || !document.getElementById('cb-cgu').checked) {
+    document.getElementById('err-etape3').style.display = 'block';
+    return;
+  }
+  document.getElementById('err-etape3').style.display = 'none';
+
+  var paiementChoix = document.querySelector('input[name="paiement_choix"]:checked');
+  var ref = 'CS-MOR-' + Date.now().toString(36).toUpperCase();
+
+  var fd = new FormData();
+  fd.append('_subject', 'Nouvelle annonce Morbihan — ' + D.prenom + ' ' + D.nom);
+  fd.append('access_key', 'd42b8d9d-a52c-4888-a489-5dd59b1b0f5b');
+  fd.append('prenom', D.prenom); fd.append('nom', D.nom); fd.append('pseudo', D.pseudo);
+  fd.append('email', D.email); fd.append('tel', D.tel);
+  fd.append('age', D.age); fd.append('ville', D.ville);
+  fd.append('genre', D.genre); fd.append('recherche', D.recherche);
+  fd.append('age_recherche', D.ageRecherche); fd.append('distance', D.distance);
+  fd.append('physique', D.physique); fd.append('situation', D.situation);
+  fd.append('enfants', D.enfants); fd.append('fumeur', D.fumeur);
+  fd.append('mobilite', D.mobilite); fd.append('profession', D.profession);
+  fd.append('message_prive_lili', D.msgLili);
+  fd.append('titre', D.titre);
+  fd.append('qui_je_suis', D.onglet1);
+  fd.append('mon_quotidien', D.onglet2);
+  fd.append('ce_que_je_cherche', D.onglet3);
+  fd.append('ce_que_japporte', D.onglet4);
+  fd.append('mon_petit_truc', D.onglet5);
+  fd.append('passions', D.passions.join(', '));
+  fd.append('motcles_moi', D.motcles.join(', '));
+  fd.append('motcles_amour', D.motclesAmour.join(', '));
+  fd.append('mode_paiement', paiementChoix ? paiementChoix.value : 'non précisé');
+  fd.append('reference', ref);
+
+  fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+    .then(function() {
+      // Redirection paiement selon choix
+      if (paiementChoix) {
+        if (paiementChoix.value === 'yurplan') {
+          window.open('https://yp.events/f7a15a48-2521-4b12-b4c6-a52873020b86/Annonce-dans-le-Magazine-Avril-2026?from=1', '_blank');
+        } else if (paiementChoix.value === 'paypal') {
+          window.open('https://paypal.me/lilikarantez/47', '_blank');
+        }
+      }
+      goTo('s-succes');
+    })
+    .catch(function() { goTo('s-succes'); });
+};
+
+// Radios paiement étape 3
+document.querySelectorAll('#rg-paiement-e3 .radio-card').forEach(function(card) {
+  card.onclick = function() {
+    document.querySelectorAll('#rg-paiement-e3 .radio-card').forEach(function(c) { c.classList.remove('selected'); });
+    card.classList.add('selected');
+    card.querySelector('input[type=radio]').checked = true;
+  };
+});
+
+// ── PAIEMENT (page dédiée - gardée pour compatibilité) ──
+document.getElementById('btn-paiement-retour').onclick = function() { goTo('s-etape3'); };
+
+document.querySelectorAll('#rg-paiement .radio-card').forEach(function(card) {
+  card.onclick = function() {
+    document.querySelectorAll('#rg-paiement .radio-card').forEach(function(c) { c.classList.remove('selected'); });
+    card.classList.add('selected');
+    card.querySelector('input[type=radio]').checked = true;
+  };
+});
+
+}); // fin DOMContentLoaded
+</script>
+</body>
+</html>
